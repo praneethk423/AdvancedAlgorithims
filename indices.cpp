@@ -2,37 +2,47 @@
 #include <vector>
 #include <unordered_map>
 
-std::vector<int> twoSum(std::vector<int>& nums, int target) {
-    std::unordered_map<int, int> numIndexMap; 
+std::vector<int> twoSum(const std::vector<int>& nums, int target) {
+    std::unordered_map<int, int> numMap;
 
-    for (int i = 0; i < nums.size(); i++) {
+    for (int i = 0; i < nums.size(); ++i) {
         int complement = target - nums[i];
 
-        if (numIndexMap.find(complement) != numIndexMap.end()) {
-            return {numIndexMap[complement], i};
+        auto it = numMap.find(complement);
+        if (it != numMap.end()) {
+
+            return {it->second, i};
         }
 
-        numIndexMap[nums[i]] = i;
+                numMap[nums[i]] = i;
     }
 
-    return {};
+        return {};
 }
 
 int main() {
-    
-    std::vector<int> nums;
-    nums.push_back(2);
-    nums.push_back(7);
-    nums.push_back(11);
-    nums.push_back(15);
+    int n;
+    std::cout << "Enter the number of elements in the array: ";
+    std::cin >> n;
 
-    int target = 9;
+    std::vector<int> nums;
+    std::cout << "Enter the elements of the array, separated by space: ";
+    for (int i = 0; i < n; ++i) {
+        int num;
+        std::cin >> num;
+        nums.push_back(num);
+    }
+
+    int target;
+    std::cout << "Enter the target sum: ";
+    std::cin >> target;
+
     std::vector<int> result = twoSum(nums, target);
 
-    if (result.size() == 2) {
+    if (!result.empty()) {
         std::cout << "Output: [" << result[0] << ", " << result[1] << "]" << std::endl;
     } else {
-        std::cout << "No valid solution found." << std::endl;
+        std::cout << "No solution found." << std::endl;
     }
 
     return 0;
